@@ -1,0 +1,112 @@
+.landing-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.landing-content {
+    text-align: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.landing-title {
+    font-size: 4rem;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.landing-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 50px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.landing-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.landing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.halloween-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+    color: #ff8c00;
+    border: 2px solid #ff4500;
+}
+
+.halloween-card:hover {
+    box-shadow: 0 20px 40px rgba(255, 69, 0, 0.4);
+}
+
+.birthday-card {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+}
+
+.birthday-card:hover {
+    box-shadow: 0 20px 40px rgba(255, 107, 107, 0.4);
+}
+
+.card-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.card-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.card-cta {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .landing-title {
+        font-size: 2.5rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .landing-card {
+        padding: 25px;
+        min-height: 150px;
+    }
+
+    .card-content h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Stop: Niama's 30th!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;700&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #111;
+            position: relative;
+        }
+
+        .font-oswald {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.1em;
+        }
+
+        #departure-board-overlay { position: fixed; inset: 0; z-index: 200; background-color: #000; cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: opacity 1.5s ease-out; }
+        #board-text { font-family: 'Roboto Mono', monospace; opacity: 0; transition: opacity 0.5s ease-in-out; text-align: center; }
+        #departure-board-overlay.show-text #board-text { opacity: 1; }
+        .flap { display: inline-block; background-color: #1a1a1a; color: #ffD700; padding: 0.25rem 0.5rem; border-radius: 4px; text-shadow: 0 0 5px #ffD700; }
+        @keyframes quick-flip { 0% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0); opacity: 0.5; } 100% { transform: scaleY(1); opacity: 1; } }
+        .flap.flipping { animation: quick-flip 0.1s linear; }
+        #departure-board-overlay.unravel { opacity: 0; }
+
+        @keyframes pulse-border { 0%, 100% { border-color: #DC241F; box-shadow: 0 0 10px #DC241F, 0 0 20px #E47472, 0 0 30px rgba(0,0,0,0.5) inset; } 50% { border-color: #E47472; box-shadow: 0 0 15px #DC241F, 0 0 25px #E47472, 0 0 35px rgba(0,0,0,0.7) inset; } }
+
+        .card {
+            background-color: rgba(240, 240, 240, 0.6);
+            color: #111;
+            border: 4px solid #DC241F;
+            width: 90%;
+            max-width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            /*filter: brightness(0);*/
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            /*backdrop-filter: blur(5px);*/
+            /*-webkit-backdrop-filter: blur(5px);*/
+            opacity: 0;
+        }
+        .card.lights-on { animation: lights-on 1s forwards, pulse-border 4s infinite ease-in-out 1s; opacity: 1}
+
+        @keyframes lights-on { 0% { filter: brightness(0) saturate(0); box-shadow: none; } 50% { filter: brightness(3) saturate(2); box-shadow: 0 0 60px 30px #fff, 0 0 80px 50px #ffD700; } 100% { filter: brightness(1) saturate(1); } }
+
+        #card-content { opacity: 0; transition: opacity 1s ease-in-out; padding: 1rem; }
+        .card.revealed #card-content { opacity: 1; }
+
+        @media (max-width: 767px) {
+            #card-content { padding: 2rem; }
+        }
+        @keyframes flicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 5px #fff, 0 0 15px #ffD700, 0 0 25px #ffD700; } 20%, 24%, 55% { text-shadow: none; } }
+        .flicker-text { animation: flicker 2s infinite alternate; }
+
+        /* --- BACKGROUND TRAIN/CARRIAGE ANIMATION (Reverted to original) --- */
+        @keyframes travel { 0% { transform: translateX(-40vw); opacity: 0; } 5% { opacity: 0.1; } 95% { opacity: 0.1; } 100% { transform: translateX(140vw); opacity: 0; } }
+        @keyframes travel-reverse { 0% { transform: translateX(140vw); opacity: 0; } 5% { opacity: 0.1; } 95% { opacity: 0.1; } 100% { transform: translateX(-40vw); opacity: 0; } }
+
+        .train-container {
+            position: absolute;
+            top: var(--top-pos);
+            left: 0;
+            z-index: 5;
+            animation: travel var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            display: flex;
+            gap: 45px;
+            opacity: 0; /* Add this line */
+
+        }
+        .train-container.reverse { animation-name: travel-reverse; }
+
+        .carriage {
+            width: 100px; height: 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+            background-image: linear-gradient(to bottom, #aaa 5px, #0019A8 5px, #0019A8 17px, #aaa 17px);
+        }
+
+        @media (min-width: 768px) {
+            @keyframes travel { 0% { transform: translateX(-40vw); opacity: 0; } 5% { opacity: 1; } 95% { opacity: 1; } 100% { transform: translateX(140vw); opacity: 0; } }
+            @keyframes travel-reverse { 0% { transform: translateX(140vw); opacity: 0; } 5% { opacity: 1; } 95% { opacity: 1; } 100% { transform: translateX(-40vw); opacity: 0; } }
+        }
+
+        .carriage::before, .carriage::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 100%;
+            background-color: var(--train-color);
+        }
+
+        .carriage::before { left: -20px; border-radius: 5px 0 0 5px; }
+        .carriage::after { right: -20px; border-radius: 0 5px 5px 0; }
+        .train-container.reverse .carriage::before { left: auto; right: -20px; border-radius: 0 5px 5px 0; }
+        .train-container.reverse .carriage::after { right: auto; left: -20px; border-radius: 5px 0 0 5px; }
+
+        .carriage.central { --train-color: #DC241F; }
+        .carriage.victoria { --train-color: #0098D4; }
+        .carriage.district { --train-color: #007A33; }
+        .carriage.jubilee { --train-color: #7b9dad; }
+        .carriage.metropolitan { --train-color: #970059; }
+        .carriage.circle { --train-color: #FFD200; }
+    </style>
+</head>
+<body>
+
+<audio id="background-music" loop autoplay muted>
+    <source src="waterloo.mp3" type="audio/mpeg">
+</audio>
+
+<button id="mute-button" style="position: fixed; bottom: 15px; right: 15px; z-index: 100; background: #DC241F; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: none;">
+    🔊
+</button>
+
+<div id="departure-board-overlay">
+    <div id="board-text" class="text-xl sm:text-3xl md:text-4xl flex flex-col items-center gap-2 sm:gap-4">
+        <div class="flex gap-2 sm:gap-4">
+            <span class="flap" data-final="C">C</span><span class="flap" data-final="L">L</span><span class="flap" data-final="I">I</span><span class="flap" data-final="C">C</span><span class="flap" data-final="K">K</span><span class="flap" data-final="&nbsp;">&nbsp;</span><span class="flap" data-final="T">T</span><span class="flap" data-final="O">O</span>
+        </div>
+        <div class="flex gap-2 sm:gap-4">
+            <span class="flap" data-final="B">B</span><span class="flap" data-final="O">O</span><span class="flap" data-final="A">A</span><span class="flap" data-final="R">R</span><span class="flap" data-final="D">D</span>
+        </div>
+    </div>
+</div>
+<div id="train-depot" class="absolute inset-0 z-0"></div>
+
+<div id="invitation-card" class="card relative p-4 sm:p-8 md:p-10 rounded-lg text-center">
+    <div id="card-content">
+        <h1 class="font-oswald text-3xl sm:text-5xl md:text-6xl text-[#DC241F] flicker-text mb-2">ALL ABOARD!</h1>
+        <h2 class="text-2xl sm:text-3xl text-[#0019A8] font-oswald mb-2">THE BIRTHDAY EXPRESS</h2>
+        <p class="text-base sm:text-lg md:text-xl text-gray-700 mb-6">Next Stop: Niama's 30th Birthday</p>
+
+        <div class="border-t border-b border-dashed border-gray-400 py-4 my-4">
+            <p class="text-sm sm:text-base text-gray-600">Mind the gap on the way to the dance floor!</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 text-sm sm:text-base my-6">
+            <div class="flex items-center justify-center flex-col space-y-2">
+                <svg class="w-8 h-8 md:w-10 md:h-10 text-[#0019A8]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="font-bold text-gray-800">7:00 PM onwards</span>
+                <span class="text-xs sm:text-sm text-gray-500">Saturday, 1st Nov 2025</span>
+            </div>
+            <div class="flex items-center justify-center flex-col space-y-2">
+                <svg class="w-8 h-8 md:w-10 md:h-10 text-[#0019A8]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span class="font-bold text-gray-800">The Terminus at:</span>
+                <span class="font-oswald text-sm sm:text-base md:text-lg text-gray-600">NW5 2RZ</span>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-dashed border-gray-400 flex flex-col justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
+            <div class="text-center">
+                <div class="font-oswald text-2xl sm:text-3xl text-gray-800">BYOB</div>
+                <div class="text-xs sm:text-sm text-gray-500">(Bring Your Own Booze)</div>
+            </div>
+            <div class="text-center">
+                <div class="font-oswald text-2xl sm:text-3xl text-red-600">DRESS CODE</div>
+                <div class="text-xs sm:text-sm text-gray-500 font-bold">TUBE STATIONS</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const music = document.getElementById('background-music');
+        const muteButton = document.getElementById('mute-button');
+        const departureBoardOverlay = document.getElementById('departure-board-overlay');
+        const boardText = document.getElementById('board-text');
+        const invitationCard = document.getElementById('invitation-card');
+        function createTrains() {
+            const trainDepot = document.getElementById('train-depot');
+            const trainLines = [
+                { class: 'reverse', color: 'central', top: '10%', duration: '25s', delay: '0s', mobile: true },
+                { class: 'reverse', color: 'circle', top: '65%', duration: '18s', delay: '0s', mobile: true },
+                { class: 'reverse', color: 'district', top: '50%', duration: '28s', delay: '0s', mobile: true },
+                { class: '', color: 'victoria', top: '20%', duration: '24s', delay: '0s', mobile: true },
+                { class: '', color: 'jubilee', top: '75%', duration: '19s', delay: '0s', mobile: true },
+                { class: '', color: 'metropolitan', top: '35%', duration: '29s', delay: '0s', mobile: true }
+            ];
+
+            let trainHTML = '';
+            trainLines.forEach(line => {
+                const numCarriages = Math.floor(Math.random() * 4) + 3;
+                let carriagesHTML = '';
+                for (let i = 0; i < numCarriages; i++) {
+                    carriagesHTML += `<div class="carriage ${line.color}"></div>`;
+                }
+
+                const mobileClass = line.mobile ? '' : 'hidden';
+
+                trainHTML += `
+                    <div class="train-container ${line.class} ${mobileClass}" style="--top-pos: ${line.top}; --duration: ${line.duration}; --delay: ${line.delay};">
+                        ${carriagesHTML}
+                    </div>
+                `;
+            });
+            trainDepot.innerHTML = trainHTML;
+        }
+
+        function animateBoard() {
+            const flaps = document.querySelectorAll('.flap');
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            let totalDelay = 0;
+            departureBoardOverlay.classList.add('show-text');
+            flaps.forEach((flap, i) => {
+                const finalChar = flap.getAttribute('data-final');
+                if (finalChar === '&nbsp;') { flap.innerHTML = '&nbsp;'; return; }
+                setTimeout(() => {
+                    let flipCount = 0;
+                    const maxFlips = 10 + Math.floor(Math.random() * 10);
+                    const flipInterval = setInterval(() => {
+                        flap.textContent = chars[Math.floor(Math.random() * chars.length)];
+                        flap.classList.add('flipping');
+                        setTimeout(() => flap.classList.remove('flipping'), 50);
+                        flipCount++;
+                        if (flipCount >= maxFlips) {
+                            clearInterval(flipInterval);
+                            flap.innerHTML = finalChar;
+                        }
+                    }, 100);
+                }, totalDelay);
+                totalDelay += 50;
+            });
+        }
+
+        // The trains are NOT created here anymore.
+        animateBoard();
+
+        departureBoardOverlay.addEventListener('click', () => {
+            // The trains are now created ONLY when the user clicks.\
+
+            departureBoardOverlay.classList.add('unravel');
+            setTimeout(() => { invitationCard.classList.add('lights-on');}, 8000);
+
+
+            setTimeout(() => { invitationCard.classList.add('revealed'); }, 500);
+            if (music.paused) { music.play(); }
+            if (music.muted) {
+                music.muted = false;
+                fadeInAudio(music);
+            }
+            muteButton.style.display = 'block';
+            setTimeout(() => { departureBoardOverlay.style.display = 'none'; }, 15000);
+
+        }, { once: true });
+
+
+
+        muteButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleMute();
+        });
+        createTrains();
+
+    });
+
+    function fadeInAudio(audioElement) { let currentVolume = 0; audioElement.volume = currentVolume; const fadeDuration = 10000; const fadeInterval = 100; const volumeIncrement = fadeInterval / fadeDuration; const fadeEffect = setInterval(() => { currentVolume += volumeIncrement; if (currentVolume >= 1) { currentVolume = 1; clearInterval(fadeEffect); } audioElement.volume = currentVolume; }, fadeInterval); }
+    function toggleMute() { const music = document.getElementById('background-music'); const muteButton = document.getElementById('mute-button'); music.muted = !music.muted; muteButton.textContent = music.muted ? '🔇' : '🔊'; }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>You're Invited... If You Dare</title>-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&display=swap" rel="stylesheet">-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: 'Metal Mania', cursive;-->
+<!--            background-color: #0a0a0a;-->
+<!--            min-height: 100vh;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: flex-start;-->
+<!--            align-items: center;-->
+<!--            padding: 1rem;-->
+<!--            overflow-x: hidden;-->
+<!--        }-->
+
+<!--        .font-creepster {-->
+<!--            font-family: 'Creepster', cursive;-->
+<!--        }-->
+
+<!--        /* -&#45;&#45; MUMMY REVEAL STYLES -&#45;&#45; */-->
+<!--        #mummy-overlay { position: fixed; inset: 0; z-index: 200; background-color: #000; cursor: pointer; overflow: hidden; transition: opacity 1.5s ease-out; }-->
+<!--        #mummy-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Creepster', cursive; font-size: 4rem; pointer-events: none; opacity: 0; transform: scale(0.8); transition: opacity 1s ease-in-out, transform 1s ease-in-out; z-index: 10; color: #ffaf4d; text-shadow: 0 0 5px #fff, 0 0 10px #ff7b00, 0 0 20px #ff4500, 0 0 35px #ff4500; }-->
+<!--        #mummy-overlay.show-text #mummy-text { opacity: 1; transform: scale(1); }-->
+<!--        .bandage { position: absolute; background-color: #d1b490; border: 1px solid rgba(0,0,0,0.2); box-shadow: 0 2px 10px rgba(0,0,0,0.5); background-image: linear-gradient( 45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 75%, transparent 75%, transparent ); background-size: 20px 20px; transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 1s ease, filter 1s ease; z-index: 5; left: -10%; right: -10%; transform: rotate(var(&#45;&#45;end-rotate)); }-->
+<!--        #b1 { top: 10%; height: 15%; } #b2 { top: 30%; height: 10%; } #b3 { top: 50%; height: 20%; } #b4 { top: 75%; height: 12%; } #b5 { top: -5%; height: 10%; } #b6 { top: 90%; height: 15%; }-->
+<!--        #mummy-overlay.unravel .bandage { transform: scale(0); opacity: 0; filter: blur(20px); }-->
+<!--        #mummy-overlay.unravel #mummy-text { transform: scale(0.5); opacity: 0; }-->
+
+<!--        /* -&#45;&#45; CARD & REVEAL ANIMATIONS -&#45;&#45; */-->
+<!--        @keyframes pulse-border { 0%, 100% { border-color: #ff4500; box-shadow: 0 0 10px #ff4500, 0 0 20px #ff9a00, 0 0 30px rgba(0,0,0,0.5) inset; } 50% { border-color: #ff7b00; box-shadow: 0 0 15px #ff8c00, 0 0 25px #ffae42, 0 0 35px rgba(0,0,0,0.7) inset; } }-->
+
+<!--        .card {-->
+<!--            background: radial-gradient(circle, #331a00 0%, #1a0d00 50%, #000000 100%);-->
+<!--            border: 3px solid #ff4500;-->
+<!--            width: 100%; max-width: 400px;-->
+<!--            position: relative; z-index: 10;-->
+<!--            margin-top: 1rem; margin-bottom: 1rem;-->
+<!--            flex-shrink: 0;-->
+<!--            filter: brightness(0);-->
+<!--        }-->
+<!--        .card.lights-on { animation: lights-on 1s forwards, pulse-border 4s infinite ease-in-out 1s; }-->
+
+<!--        @keyframes lights-on { 0% { filter: brightness(0) saturate(0); box-shadow: none; } 50% { filter: brightness(2.5) saturate(1.5); box-shadow: 0 0 30px 15px #ffae42, 0 0 50px 25px #ff4500, 0 0 75px 40px #000 inset; } 100% { filter: brightness(1) saturate(1); } }-->
+
+<!--        @keyframes title-reveal {-->
+<!--            0% { opacity: 0; transform: translateY(120px) scale(1.5); }-->
+<!--            5% { opacity: 1; transform: translateY(120px) scale(1.5); }-->
+<!--            65% { opacity: 1; transform: translateY(120px) scale(1.5); }-->
+<!--            100% { opacity: 1; transform: translateY(0) scale(1); }-->
+<!--        }-->
+<!--        @keyframes content-reveal {-->
+<!--            0%, 65% { opacity: 0; }-->
+<!--            100% { opacity: 1; }-->
+<!--        }-->
+
+<!--        .flicker-text, #card-content {-->
+<!--            opacity: 0;-->
+<!--        }-->
+<!--        .card.start-reveal .flicker-text {-->
+<!--            animation:-->
+<!--                    title-reveal 4.5s forwards cubic-bezier(0.23, 1, 0.32, 1),-->
+<!--                    flicker 2s infinite alternate 4.5s;-->
+<!--        }-->
+<!--        .card.start-reveal #card-content {-->
+<!--            animation: content-reveal 4.5s forwards;-->
+<!--        }-->
+<!--        #mummy-text.flicker-text {-->
+<!--            animation: flicker 2s infinite alternate;-->
+<!--        }-->
+
+<!--        @media (min-width: 768px) { .card { transform: rotate(-2deg); max-width: 500px; border: 4px solid #ff4500; } .card:hover { transform: rotate(0deg) scale(1.02); box-shadow: 0 0 30px #ff4500, 0 0 50px #ff9a00, 0 0 70px #000 inset; } }-->
+
+<!--        @keyframes flicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff7b00, 0 0 40px #ff7b00; } 20%, 24%, 55% { text-shadow: none; } }-->
+
+<!--        .corner-web { position: absolute; width: 80px; height: 80px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M 0 0 L 100 0 C 50 50, 50 50, 0 100 Z" fill="rgba(255,255,255,0.03)"/><path d="M 0 0 L 80 0 C 40 40, 40 40, 0 80 Z" fill="rgba(255,255,255,0.03)"/><path d="M 0 0 L 60 0 C 30 30, 30 30, 0 60 Z" fill="rgba(255,255,255,0.03)"/><path d="M 0 0 Q 50 0 50 50 M 0 0 Q 0 50 50 50" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/></svg>'); background-size: contain; background-repeat: no-repeat; } .top-left { top: -3px; left: -3px; } .top-right { top: -3px; right: -3px; transform: rotate(90deg); } .bottom-left { bottom: -3px; left: -3px; transform: rotate(-90deg); } .bottom-right { bottom: -3px; right: -3px; transform: rotate(180deg); }-->
+<!--        @keyframes float { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: 0.7; } 80% { opacity: 0.7; } 100% { opacity: 0; transform: translateY(-120vh); } }-->
+<!--        .ghost { position: absolute; width: 60px; height: 90px; background: radial-gradient(circle at 50% 0, #f0f8ff, transparent 70%); border-radius: 50% 50% 0 0; animation: float 15s infinite ease-in-out; bottom: -150px; z-index: 20; left: var(&#45;&#45;ghost-left); filter: blur(0.5px); } .ghost::before, .ghost::after { content: ''; position: absolute; top: 60%; width: 15px; height: 15px; background: #2c2c2c; border-radius: 50%; } .ghost::before { left: 10px; } .ghost::after { right: 10px; }-->
+<!--        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }-->
+<!--        .icon { animation: pulse 3s infinite ease-in-out; color: #ff8c00; }-->
+
+<!--        .spider-wrapper {-->
+<!--            position: absolute; top: -50px; left: var(&#45;&#45;spider-left);-->
+<!--            transform: translateX(-50%);-->
+<!--            z-index: 15;-->
+<!--            animation-name: var(&#45;&#45;crawl-animation-name);-->
+<!--            animation-duration: var(&#45;&#45;crawl-duration);-->
+<!--            animation-iteration-count: infinite;-->
+<!--            animation-timing-function: ease-in-out;-->
+<!--            animation-delay: var(&#45;&#45;crawl-delay, 0s);-->
+<!--            /* UPDATED: Start hidden and set a fade-in transition */-->
+<!--            opacity: 0;-->
+<!--            transition: opacity 0.5s ease-in-out 4s; /* Fade in after a 4s delay */-->
+<!--        }-->
+<!--        /* NEW: This class will trigger the spider fade-in */-->
+<!--        .card.start-reveal .spider-wrapper {-->
+<!--            opacity: 1;-->
+<!--        }-->
+
+<!--        .spider-wrapper::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 1px; background: rgba(200, 200, 200, 0.5); bottom: 15px; height: calc(var(&#45;&#45;crawl-end-top, 150px) + 15px); animation-name: var(&#45;&#45;thread-animation-name); animation-duration: var(&#45;&#45;crawl-duration); animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-delay: var(&#45;&#45;crawl-delay, 0s); } .spider-wrapper svg { width: 30px; height: 30px; fill: #333; filter: drop-shadow(0 0 4px #ff8c00); } .spider-wrapper::after { content: ''; position: absolute; top: -25px; left: 50%; width: 80px; height: 80px; background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Cpath d="M50,0 V100 M0,50 H100 M14.6,14.6 L85.4,85.4 M14.6,85.4 L85.4,14.6" stroke="rgba(200,200,200,0.6)" stroke-width="1"/%3E%3Ccircle cx="50" cy="50" r="15" stroke="rgba(200,200,200,0.6)" stroke-width="1" fill="none"/%3E%3Ccircle cx="50" cy="50" r="30" stroke="rgba(200,200,200,0.6)" stroke-width="1" fill="none"/%3E%3Ccircle cx="50" cy="50" r="45" stroke="rgba(200,200,200,0.6)" stroke-width="1" fill="none"/%3E%3C/svg%3E'); background-size: contain; background-repeat: no-repeat; z-index: -1; animation-name: var(&#45;&#45;web-animation-name); animation-duration: var(&#45;&#45;crawl-duration); animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-delay: var(&#45;&#45;crawl-delay, 0s); }-->
+<!--        @keyframes fly { 0% { left: -10vw; opacity: 0.8; } 100% { left: 110vw; opacity: 0.8; } } @keyframes flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(-1); } }-->
+<!--        .bat-container { position: absolute; top: var(&#45;&#45;bat-top); width: 100%; animation: fly var(&#45;&#45;bat-duration) linear infinite; z-index: 5; } .bat { width: 40px; height: 25px; background-color: #111; border-radius: 10px 10px 50% 50% / 20px 20px 30% 30%; position: relative; } .bat::before, .bat::after { content: ''; position: absolute; width: 25px; height: 35px; background-color: #111; top: 0; border-radius: 50% 50% 0 0; animation: flap 0.2s linear infinite; } .bat::before { left: -15px; transform-origin: 100% 100%; } .bat::after { right: -15px; transform-origin: 0% 100%; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="bg-black text-white">-->
+
+<!--<audio id="background-music" loop autoplay muted>-->
+<!--    <source src="../../public/audio/skeletons.mp3" type="audio/mpeg">-->
+<!--</audio>-->
+
+<!--<button id="mute-button" style="position: fixed; bottom: 15px; right: 15px; z-index: 100; background: #ff4500; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: none;">-->
+<!--    🔊-->
+<!--</button>-->
+
+<!--<div id="mummy-overlay">-->
+<!--    <div id="mummy-text" class="flicker-text">CLICK ME</div>-->
+<!--    <div class="bandage" id="b1" style="&#45;&#45;end-rotate: 5deg; &#45;&#45;start-left: -100%; &#45;&#45;start-right: 100%; &#45;&#45;start-rotate: -20deg;"></div>-->
+<!--    <div class="bandage" id="b2" style="&#45;&#45;end-rotate: -3deg; &#45;&#45;start-left: 100%; &#45;&#45;start-right: -100%; &#45;&#45;start-rotate: 15deg;"></div>-->
+<!--    <div class="bandage" id="b3" style="&#45;&#45;end-rotate: 2deg; &#45;&#45;start-left: -100%; &#45;&#45;start-right: 100%; &#45;&#45;start-rotate: -10deg;"></div>-->
+<!--    <div class="bandage" id="b4" style="&#45;&#45;end-rotate: -8deg; &#45;&#45;start-left: 100%; &#45;&#45;start-right: -100%; &#45;&#45;start-rotate: 30deg;"></div>-->
+<!--    <div class="bandage" id="b5" style="&#45;&#45;end-rotate: 4deg; &#45;&#45;start-left: -50%; &#45;&#45;start-right: -50%; &#45;&#45;start-rotate: 10deg;"></div>-->
+<!--    <div class="bandage" id="b6" style="&#45;&#45;end-rotate: -2deg; &#45;&#45;start-left: -50%; &#45;&#45;start-right: -50%; &#45;&#45;start-rotate: -10deg;"></div>-->
+<!--</div>-->
+
+<!--<div class="absolute inset-0 z-20 pointer-events-none">-->
+<!--    <div class="ghost" style="&#45;&#45;ghost-left: 10%;"></div>-->
+<!--    <div class="ghost" style="&#45;&#45;ghost-left: 45%; animation-delay: 3s; animation-duration: 12s;"></div>-->
+<!--    <div class="ghost" style="&#45;&#45;ghost-left: 75%; animation-delay: 6s; animation-duration: 14s;"></div>-->
+<!--    <div class="ghost" style="&#45;&#45;ghost-left: 25%; animation-delay: 8s; animation-duration: 11s;"></div>-->
+<!--    <div class="ghost" style="&#45;&#45;ghost-left: 90%; animation-delay: 4s; animation-duration: 13s;"></div>-->
+<!--</div>-->
+
+<!--<div class="absolute inset-0 z-0 overflow-hidden">-->
+<!--    <div class="bat-container" style="&#45;&#45;bat-top: 10%; &#45;&#45;bat-duration: 10s;"> <div class="bat"></div> </div>-->
+<!--    <div class="bat-container" style="&#45;&#45;bat-top: 25%; &#45;&#45;bat-duration: 8s; animation-delay: 3s;"> <div class="bat"></div> </div>-->
+<!--    <div class="bat-container" style="&#45;&#45;bat-top: 5%; &#45;&#45;bat-duration: 12s; animation-delay: 6s;"> <div class="bat"></div> </div>-->
+<!--    <div class="bat-container" style="&#45;&#45;bat-top: 40%; &#45;&#45;bat-duration: 9s; animation-delay: 1s;"> <div class="bat"></div> </div>-->
+<!--</div>-->
+
+<!--<div id="invitation-card" class="card relative p-6 sm:p-8 md:p-10 rounded-lg text-center">-->
+
+<!--    <div class="spider-wrapper" style="&#45;&#45;spider-left: 20%; &#45;&#45;crawl-duration: 12s; animation-delay: 0s;">-->
+<!--        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20"/><path d="M50,50 l-30,-30 m15,0 l30,30 m0,-15 l-30,30 m15,0 l30,-30 M50,50 l-30,30 m15,0 l30,-30 m0,15 l-30,-30 m15,0 l30,30" stroke="#1a1a1a" stroke-width="5"/></svg>-->
+<!--    </div>-->
+<!--    <div class="spider-wrapper" style="&#45;&#45;spider-left: 80%; &#45;&#45;crawl-duration: 10s; animation-delay: 3s;">-->
+<!--        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20"/><path d="M50,50 l-30,-30 m15,0 l30,30 m0,-15 l-30,30 m15,0 l30,-30 M50,50 l-30,30 m15,0 l30,-30 m0,15 l-30,-30 m15,0 l30,30" stroke="#1a1a1a" stroke-width="5"/></svg>-->
+<!--    </div>-->
+<!--    <div class="spider-wrapper" style="&#45;&#45;spider-left: 50%; &#45;&#45;crawl-duration: 14s; animation-delay: 6s;">-->
+<!--        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20"/><path d="M50,50 l-30,-30 m15,0 l30,30 m0,-15 l-30,30 m15,0 l30,-30 M50,50 l-30,30 m15,0 l30,-30 m0,15 l-30,-30 m15,0 l30,30" stroke="#1a1a1a" stroke-width="5"/></svg>-->
+<!--    </div>-->
+<!--    <div class="spider-wrapper" style="&#45;&#45;spider-left: 10%; &#45;&#45;crawl-duration: 9s; animation-delay: 1s;">-->
+<!--        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20"/><path d="M50,50 l-30,-30 m15,0 l30,30 m0,-15 l-30,30 m15,0 l30,-30 M50,50 l-30,30 m15,0 l30,-30 m0,15 l-30,-30 m15,0 l30,30" stroke="#1a1a1a" stroke-width="5"/></svg>-->
+<!--    </div>-->
+<!--    <div class="spider-wrapper" style="&#45;&#45;spider-left: 90%; &#45;&#45;crawl-duration: 11s; animation-delay: 5s;">-->
+<!--        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20"/><path d="M50,50 l-30,-30 m15,0 l30,30 m0,-15 l-30,30 m15,0 l30,-30 M50,50 l-30,30 m15,0 l30,-30 m0,15 l-30,-30 m15,0 l30,30" stroke="#1a1a1a" stroke-width="5"/></svg>-->
+<!--    </div>-->
+
+<!--    <div class="corner-web top-left"></div>-->
+<!--    <div class="corner-web top-right"></div>-->
+<!--    <div class="corner-web bottom-left"></div>-->
+<!--    <div class="corner-web bottom-right"></div>-->
+
+<!--    <h1 class="font-creepster text-4xl sm:text-5xl md:text-7xl text-orange-500 flicker-text">You're Invited</h1>-->
+
+<!--    <div id="card-content">-->
+<!--        <p class="text-base sm:text-lg md:text-2xl text-gray-300 mb-6">...if you dare!</p>-->
+<!--        <div class="border-t border-b border-dashed border-orange-700 py-4 my-4">-->
+<!--            <h2 class="text-2xl sm:text-3xl md:text-4xl text-orange-400 mb-2">A HalloweenCard Haunting</h2>-->
+<!--            <p class="text-sm sm:text-base text-gray-400">Join us for a night of frights and delights</p>-->
+<!--        </div>-->
+<!--        <div class="grid grid-cols-2 gap-4 text-sm sm:text-base md:gap-6 md:text-lg">-->
+<!--            <div class="flex items-center justify-center flex-col space-y-1 sm:space-y-2">-->
+<!--                <svg class="w-8 h-8 sm:w-10 sm:h-10 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>-->
+<!--                <span class="font-bold text-orange-200">6:30 PM 'til Midnight</span>-->
+<!--                <span class="text-xs sm:text-sm text-gray-500">Saturday, 1st Nov 2025</span>-->
+<!--            </div>-->
+<!--            <div class="flex items-center justify-center flex-col space-y-1 sm:space-y-2">-->
+<!--                <svg class="w-8 h-8 sm:w-10 sm:h-10 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>-->
+<!--                <span class="font-bold text-orange-200">The Crypts at:</span>-->
+<!--                <span class="text-sm sm:text-base md:text-lg text-gray-400 tracking-widest">NW5 2RZ</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="mt-6 pt-4 border-t border-dashed border-orange-700 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 text-orange-300">-->
+<!--            <div class="text-center">-->
+<!--                <div class="font-creepster text-2xl sm:text-3xl">BYOB</div>-->
+<!--                <div class="text-xs sm:text-sm text-gray-500">(Bring Your Own Booze)</div>-->
+<!--            </div>-->
+<!--            <div class="text-center">-->
+<!--                <div class="font-creepster text-2xl sm:text-3xl">Costumes</div>-->
+<!--                <div class="text-xs sm:text-sm text-gray-500">(Required!)</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        // -&#45;&#45; ELEMENT SELECTORS -&#45;&#45;-->
+<!--        const music = document.getElementById('background-music');-->
+<!--        const muteButton = document.getElementById('mute-button');-->
+<!--        const mummyOverlay = document.getElementById('mummy-overlay');-->
+<!--        const invitationCard = document.getElementById('invitation-card');-->
+<!--        const cardContent = document.getElementById('card-content');-->
+
+<!--        // -&#45;&#45; REVEAL LOGIC -&#45;&#45;-->
+<!--        setTimeout(() => { mummyOverlay.classList.add('show-text'); }, 100);-->
+
+<!--        mummyOverlay.addEventListener('click', () => {-->
+<!--            mummyOverlay.classList.add('unravel');-->
+<!--            invitationCard.classList.add('lights-on');-->
+
+<!--            // -&#45;&#45; REVISED REVEAL SEQUENCE -&#45;&#45;-->
+<!--            invitationCard.classList.add('start-reveal');-->
+
+<!--            // Music Logic-->
+<!--            music.muted = false;-->
+<!--            music.play();-->
+<!--            fadeInAudio(music);-->
+<!--            muteButton.style.display = 'block';-->
+
+<!--            setTimeout(() => { mummyOverlay.style.display = 'none'; }, 1500);-->
+<!--        }, { once: true });-->
+
+<!--        muteButton.addEventListener('click', (event) => {-->
+<!--            event.stopPropagation();-->
+<!--            toggleMute();-->
+<!--        });-->
+
+<!--        // -&#45;&#45; DANGLING SPIDER SCRIPT -&#45;&#45;-->
+<!--        const spiders = document.querySelectorAll('.spider-wrapper');-->
+<!--        const dynamicStyles = document.createElement('style');-->
+<!--        document.head.appendChild(dynamicStyles);-->
+<!--        let animationRules = '';-->
+<!--        spiders.forEach((spider, index) => {-->
+<!--            const uniqueId = `spider-${index}`;-->
+<!--            const randomDrop = Math.random() * 170 + 80;-->
+<!--            const style = getComputedStyle(spider);-->
+<!--            const durationS = parseFloat(style.getPropertyValue('&#45;&#45;crawl-duration'));-->
+<!--            const delayS = parseFloat(style.animationDelay) || 0;-->
+<!--            const pauseDurationS = 1.5;-->
+<!--            const dropPercent = 20;-->
+<!--            const pausePercent = (pauseDurationS / durationS) * 100;-->
+<!--            const fallStartPercent = dropPercent + pausePercent;-->
+<!--            animationRules += `@keyframes crawl-${uniqueId} { 0% { top: -50px; } ${dropPercent}% { top: ${randomDrop}px; } ${fallStartPercent}% { top: ${randomDrop}px; } 100% { top: 600px; } }`;-->
+<!--            animationRules += `@keyframes thread-snap-${uniqueId} { 0% { opacity: 0; } ${dropPercent - 5}% { opacity: 1; } ${fallStartPercent}% { opacity: 1; } ${fallStartPercent + 0.1}%, 100% { opacity: 0; } }`;-->
+<!--            animationRules += `@keyframes web-lifecycle-${uniqueId} { 0%, ${dropPercent - 0.1}% { opacity: 0; transform: translateX(-50%) scale(0); } ${dropPercent}% { opacity: 1; transform: translateX(-50%) scale(0.1); } ${dropPercent + (pausePercent / 2)}% { opacity: 1; transform: translateX(-50%) scale(1); } ${fallStartPercent}% { opacity: 1; transform: translateX(-50%) scale(1); } ${fallStartPercent + 0.1}%, 100% { opacity: 0; transform: translateX(-50%) scale(0); } }`;-->
+<!--            spider.style.setProperty('&#45;&#45;crawl-end-top', `${randomDrop}px`);-->
+<!--            spider.style.setProperty('&#45;&#45;crawl-animation-name', `crawl-${uniqueId}`);-->
+<!--            spider.style.setProperty('&#45;&#45;thread-animation-name', `thread-snap-${uniqueId}`);-->
+<!--            spider.style.setProperty('&#45;&#45;web-animation-name', `web-lifecycle-${uniqueId}`);-->
+<!--            spider.style.setProperty('&#45;&#45;crawl-delay', `${delayS}s`);-->
+<!--        });-->
+<!--        dynamicStyles.textContent = animationRules;-->
+<!--    });-->
+
+<!--    // -&#45;&#45; HELPER FUNCTIONS -&#45;&#45;-->
+<!--    function fadeInAudio(audioElement) { let currentVolume = 0; audioElement.volume = currentVolume; const fadeDuration = 10000; const fadeInterval = 100; const volumeIncrement = fadeInterval / fadeDuration; const fadeEffect = setInterval(() => { currentVolume += volumeIncrement; if (currentVolume >= 1) { currentVolume = 1; clearInterval(fadeEffect); } audioElement.volume = currentVolume; }, fadeInterval); }-->
+<!--    function toggleMute() { const music = document.getElementById('background-music'); const muteButton = document.getElementById('mute-button'); music.muted = !music.muted; muteButton.textContent = music.muted ? '🔇' : '🔊'; }-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->

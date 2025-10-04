@@ -1,0 +1,17 @@
+{
+  "name": "Halloween",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.9.3"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "^5.5.3"
+  },
+  "private": true
+}
