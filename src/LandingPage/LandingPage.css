@@ -1,112 +1,204 @@
 .landing-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #f7f7fa;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 32px;
 }
 
 .landing-content {
     text-align: center;
-    max-width: 1200px;
+    max-width: 900px;
     width: 100%;
 }
 
 .landing-title {
-    font-size: 4rem;
-    color: white;
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 2.2rem;
+    color: #222;
+    margin-bottom: 8px;
+    font-weight: 700;
 }
 
 .landing-subtitle {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 50px;
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 32px;
 }
 
 .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.landing-card {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transform: translateY(0);
-    min-height: 200px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    max-height: 70vh;
+    overflow-y: auto;
     justify-content: center;
 }
 
-.landing-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.landing-card {
+    flex: 1 1 calc(50% - 1.2rem);
+    aspect-ratio: 1 / 1;
+    min-width: 220px;
+    max-width: 320px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    border: 1px solid #e5e7eb;
+    padding: 0;
 }
 
+
+.landing-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+}
+.landing-card-content {
+    width: 100%;
+    height: 100%;
+    padding: 24px 18px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+}
+.landing-card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.card-preview-bar {
+    width: 80%;
+    height: 16px;
+    border-radius: 8px;
+    margin: 12px 0 18px 0;
+}
+.halloween-card .card-preview-bar {
+    background: linear-gradient(90deg, #2d1e2f 60%, #ff7518 100%);
+}
+.birthday-card .card-preview-bar {
+    background: linear-gradient(90deg, #e0eafc 60%, #cfdef3 100%);
+}
+.landing-card-content h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.landing-card-content p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+.card-cta {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0077b6;
+    margin-top: auto;
+}
+@media (max-width: 768px) {
+    .landing-title {
+        font-size: 1.5rem;
+    }
+    .cards-grid {
+        gap: 16px;
+    }
+    .landing-card {
+        min-width: 150px;
+        max-width: 95vw;
+    }
+    .landing-card-content {
+        padding: 16px 8px 12px 8px;
+    }
+}
 .halloween-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
-    color: #ff8c00;
-    border: 2px solid #ff4500;
+    background: linear-gradient(135deg, #2d1e2f 80%, #ff7518 100%);
+    color: #fff;
+    border: 2px solid #ff7518;
+    box-shadow: 0 4px 16px rgba(44, 12, 44, 0.3);
+}
+
+.halloween-card .landing-card-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 6px #ff7518);
 }
 
 .halloween-card:hover {
     box-shadow: 0 20px 40px rgba(255, 69, 0, 0.4);
 }
 
+
 .birthday-card {
-    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
-    color: white;
+    background: linear-gradient(135deg, #e0eafc 60%, #cfdef3 100%);
+    color: #222;
+    border: 2px solid #0077b6;
+    box-shadow: 0 4px 16px rgba(0, 119, 182, 0.15);
 }
 
+.birthday-card .landing-card-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 6px #0077b6);
+}
 .birthday-card:hover {
     box-shadow: 0 20px 40px rgba(255, 107, 107, 0.4);
 }
 
-.card-content h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
+/*.landing-card-content {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    text-align: center;*/
+/*    height: 100%;*/
+/*    !* Force content to be visible *!*/
+/*    opacity: 1 !important;*/
+/*    filter: none !important;*/
+/*}*/
 
-.card-content p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    opacity: 0.9;
-}
 
-.card-cta {
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+/*.landing-card-content h2 {*/
+/*    font-size: 1.2rem;*/
+/*}*/
 
-@media (max-width: 768px) {
-    .landing-title {
-        font-size: 2.5rem;
-    }
+/*.landing-card-icon {*/
+/*    font-size: 2rem;*/
+/*    margin-bottom: 10px;*/
+/*}*/
 
-    .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
+/*.landing-card-content p {*/
+/*    font-size: 1.1rem;*/
+/*    margin-bottom: 20px;*/
+/*    opacity: 0.9;*/
+/*}*/
 
-    .landing-card {
-        padding: 25px;
-        min-height: 150px;
-    }
+/*.card-cta {*/
+/*    font-size: 1rem;*/
+/*    font-weight: 600;*/
+/*    text-transform: uppercase;*/
+/*    letter-spacing: 1px;*/
+/*}*/
 
-    .card-content h2 {
-        font-size: 1.5rem;
-    }
-}
+/*@media (max-width: 768px) {*/
+/*    .landing-title {*/
+/*        font-size: 2.5rem;*/
+/*    }*/
+
+/*    .cards-grid {*/
+/*        grid-template-columns: 1fr;*/
+/*        gap: 20px;*/
+/*    }*/
+
+/*    .landing-card {*/
+/*        padding: 25px;*/
+/*        min-height: 150px;*/
+/*    }*/
+
+/*    .card-content h2 {*/
+/*        font-size: 1.5rem;*/
+/*    }*/
+/*}*/
